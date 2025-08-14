@@ -64,4 +64,12 @@ public class ContatoServiceImpl implements ContatoService {
         ContatoEntity atualizado = contatoRepository.save(contatoEntity);
         return contatoMapper.toDTO(atualizado);
     }
+
+    @Override
+    public void excluirContato(Long id) {
+        if (!contatoRepository.existsById(id)) {
+            throw new RuntimeException("Contato não encontrado");
+        }
+        contatoRepository.deleteById(id);
+    }
 }
