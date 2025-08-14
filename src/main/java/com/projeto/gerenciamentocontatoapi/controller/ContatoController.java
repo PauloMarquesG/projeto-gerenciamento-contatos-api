@@ -4,6 +4,7 @@ import com.projeto.gerenciamentocontatoapi.model.Contato;
 import com.projeto.gerenciamentocontatoapi.service.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -25,5 +26,15 @@ public class ContatoController {
     )
     public ResponseEntity<List<Contato>> listar(){
         return ResponseEntity.ok(this.contatoService.listarTodosContatos());
+    }
+
+    @PostMapping
+    @Operation(
+            summary = "Criar contatos",
+            description = "Criar Contato",
+            tags = {"Contatos"}
+    )
+    public ResponseEntity<Contato> criar(@Valid @RequestBody Contato contato){
+        return ResponseEntity.ok(this.contatoService.criarContato(contato));
     }
 }

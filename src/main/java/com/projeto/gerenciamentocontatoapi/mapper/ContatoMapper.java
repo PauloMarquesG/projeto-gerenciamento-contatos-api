@@ -7,5 +7,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ContatoMapper {
+    Contato toDTO(ContatoEntity contatoEntity);
     List<Contato> toDTOList(List<ContatoEntity> contatoEntity);
+    ContatoEntity toEntity(Contato contato);
 }
