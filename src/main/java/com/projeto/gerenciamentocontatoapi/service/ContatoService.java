@@ -6,4 +6,5 @@ import java.util.List;
 public interface ContatoService {
     List<Contato> listarTodosContatos();
     Contato criarContato(Contato contato);
+    Contato atualizarContato(Long id, Contato contato);
 }
