@@ -37,4 +37,14 @@ public class ContatoController {
     public ResponseEntity<Contato> criar(@Valid @RequestBody Contato contato){
         return ResponseEntity.ok(this.contatoService.criarContato(contato));
     }
+
+    @PutMapping("/{id}")
+    @Operation(
+            summary = "Atualizar contatos",
+            description = "Atualizar Contato",
+            tags = {"Contatos"}
+    )
+    public ResponseEntity<Contato> atualizar(@PathVariable Long id,@Valid @RequestBody Contato contato) {
+        return ResponseEntity.ok(this.contatoService.atualizarContato(id, contato));
+    }
 }

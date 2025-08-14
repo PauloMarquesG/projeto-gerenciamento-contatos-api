@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.projeto</groupId>
 	<artifactId>projeto-gerenciamento-contatos-api</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<name>projeto-gerenciamento-contatos-api</name>
 	<description>Criação de uma API RESTful capaz de gerenciar contatos e hospedá-la em nuvem.</description>
 	<url/>
