@@ -27,4 +27,14 @@ public class ContatoServiceImpl implements ContatoService {
         List<Contato> response = contatoMapper.toDTOList(contatoEntity);
         return response;
     }
+
+    @Override
+    public Contato criarContato(Contato contato) {
+        ContatoEntity contatoEntity = contatoMapper.toEntity(contato);
+        if (contatoEntity.getEnderecos() != null) {
+            contatoEntity.getEnderecos().forEach(endereco -> endereco.setContato(contatoEntity));
+        }
+        ContatoEntity response = contatoRepository.save(contatoEntity);
+        return contatoMapper.toDTO(response);
+    }
 }
