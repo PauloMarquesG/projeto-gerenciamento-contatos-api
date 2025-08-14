@@ -47,4 +47,15 @@ public class ContatoController {
     public ResponseEntity<Contato> atualizar(@PathVariable Long id,@Valid @RequestBody Contato contato) {
         return ResponseEntity.ok(this.contatoService.atualizarContato(id, contato));
     }
+
+    @DeleteMapping("/{id}")
+    @Operation(
+            summary = "Excluir contatos",
+            description = "Excluir Contato",
+            tags = {"Contatos"}
+    )
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        this.contatoService.excluirContato(id);
+        return ResponseEntity.noContent().build();
+    }
 }
