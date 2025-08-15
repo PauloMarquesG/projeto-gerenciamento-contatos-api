@@ -3,6 +3,7 @@ package com.projeto.gerenciamentocontatoapi.service.impl;
 import com.projeto.gerenciamentocontatoapi.mapper.ContatoMapper;
 import com.projeto.gerenciamentocontatoapi.mapper.EnderecoMapper;
 import com.projeto.gerenciamentocontatoapi.model.Contato;
+import com.projeto.gerenciamentocontatoapi.model.ContatoSimples;
 import com.projeto.gerenciamentocontatoapi.model.Endereco;
 import com.projeto.gerenciamentocontatoapi.repository.ContatoRepository;
 import com.projeto.gerenciamentocontatoapi.repository.entities.ContatoEntity;
@@ -44,19 +45,19 @@ public class ContatoServiceImpl implements ContatoService {
     }
 
     @Override
-    public Contato atualizarContato(Long id, Contato contatoRequest) {
+    public Contato atualizarContato(Long id, Contato contato) {
         ContatoEntity contatoEntity = contatoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Contato não encontrado"));
 
-        contatoEntity.setNome(contatoRequest.getNome());
-        contatoEntity.setEmail(contatoRequest.getEmail());
-        contatoEntity.setTelefone(contatoRequest.getTelefone());
-        contatoEntity.setDataNascimento(contatoRequest.getDataNascimento());
+        contatoEntity.setNome(contato.getNome());
+        contatoEntity.setEmail(contato.getEmail());
+        contatoEntity.setTelefone(contato.getTelefone());
+        contatoEntity.setDataNascimento(contato.getDataNascimento());
 
         for (EnderecoEntity endereco : new ArrayList<>(contatoEntity.getEnderecos())) {
             contatoEntity.removeEndereco(endereco);
         }
-        for (Endereco endereco : contatoRequest.getEnderecos()) {
+        for (Endereco endereco : contato.getEnderecos()) {
             EnderecoEntity enderecoEntity = enderecoMapper.toEntity(endereco);
             contatoEntity.addEndereco(enderecoEntity);
         }
@@ -71,5 +72,27 @@ public class ContatoServiceImpl implements ContatoService {
             throw new RuntimeException("Contato não encontrado");
         }
         contatoRepository.deleteById(id);
+    }
+
+    @Override
+    public Contato atualizarContatoParcial(Long id, ContatoSimples contatoSimples) {
+        ContatoEntity contatoEntity = contatoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Contato não encontrado"));
+
+        if (contatoSimples.getNome() != null) {
+            contatoEntity.setNome(contatoSimples.getNome());
+        }
+        if (contatoSimples.getEmail() != null) {
+            contatoEntity.setEmail(contatoSimples.getEmail());
+        }
+        if (contatoSimples.getTelefone() != null) {
+            contatoEntity.setTelefone(contatoSimples.getTelefone());
+        }
+        if (contatoSimples.getDataNascimento() != null) {
+            contatoEntity.setDataNascimento(contatoSimples.getDataNascimento());
+        }
+
+        ContatoEntity response = contatoRepository.save(contatoEntity);
+        return contatoMapper.toDTO(response);
     }
 }
