@@ -1,6 +1,7 @@
 package com.projeto.gerenciamentocontatoapi.controller;
 
 import com.projeto.gerenciamentocontatoapi.model.Contato;
+import com.projeto.gerenciamentocontatoapi.model.ContatoSimples;
 import com.projeto.gerenciamentocontatoapi.service.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -57,5 +58,15 @@ public class ContatoController {
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         this.contatoService.excluirContato(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    @Operation(
+            summary = "Atualizar parcialmente contatos",
+            description = "Atualizar o contato parcialmente",
+            tags = {"Contatos"}
+    )
+    public ResponseEntity<Contato> atualizarParcial(@PathVariable Long id, @RequestBody ContatoSimples contatoSimples) {
+        return ResponseEntity.ok(this.contatoService.atualizarContatoParcial(id, contatoSimples));
     }
 }
