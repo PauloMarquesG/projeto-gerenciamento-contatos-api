@@ -3,7 +3,7 @@ API RESTful para gerenciamento de contatos, desenvolvida em Java com Spring Boot
 
 ## 🔧 Tecnologias
 
-- Java 21
+- Java 17
 - Spring Boot
 - JPA
 - PostgreSQL
